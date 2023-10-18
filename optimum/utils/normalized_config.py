@@ -54,9 +54,15 @@ class NormalizedConfig:
 
         attr_name = attr_name.split(".")
         leaf_attr_name = attr_name[-1]
-        config = self.config
+
+        config = self.config  # self.config is expected to be an instance of transformers PretrainedConfig.
         for attr in attr_name[:-1]:
             config = getattr(config, attr)
+
+            # We cast potential dictionaries to PretrainedConfig for getattr to work for nested structures, where nested dictionaries
+            # may not always themselves be PretrainedConfig instances (e.g. timm, open_clip).
+            if isinstance(config, dict):
+                config = PretrainedConfig.from_dict(config)
 
         attr = getattr(config, leaf_attr_name, None)
 
