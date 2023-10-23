@@ -1609,7 +1609,7 @@ class TasksManager:
             else:
                 model_type = "open-clip"
 
-            setattr(model.config, "model_type", model_type)        
+            setattr(model.config, "model_type", model_type)
 
     @staticmethod
     def get_all_tasks():
@@ -1714,14 +1714,13 @@ class TasksManager:
                 model_name_or_path, model, subfolder, revision, cache_dir, library_name
             )
             return model
-        
+
         if library_name == "open_clip":
             model, _, _ = model_class(f"hf-hub:{model_name_or_path}", cache_dir=cache_dir, output_dict=True)
             TasksManager.standardize_model_attributes(
                 model_name_or_path, model, subfolder, revision, cache_dir, library_name
             )
             return model
-
 
         try:
             if framework == "pt":

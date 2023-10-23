@@ -54,7 +54,8 @@ class NormalizedConfig:
 
         attr_name = attr_name.split(".")
         leaf_attr_name = attr_name[-1]
-        config = self.config
+
+        config = self.config  # self.config is expected to be an instance of transformers PretrainedConfig.
         for attr in attr_name[:-1]:
             config = getattr(config, attr)
 
